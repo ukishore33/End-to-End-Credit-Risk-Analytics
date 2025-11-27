@@ -1,0 +1,100 @@
+# Feature Configuration
+
+# Feature definitions and metadata
+features:
+  # Loan features
+  loan_amount:
+    type: numeric
+    description: Requested loan amount
+    transform: log
+    
+  loan_term:
+    type: categorical
+    description: Loan term in months
+    values: [36, 60]
+    
+  interest_rate:
+    type: numeric
+    description: Interest rate percentage
+    transform: none
+    
+  installment:
+    type: numeric
+    description: Monthly payment amount
+    transform: standard
+
+  # Applicant features
+  annual_income:
+    type: numeric
+    description: Annual income
+    transform: log
+    
+  employment_length:
+    type: numeric
+    description: Years of employment
+    transform: none
+    
+  home_ownership:
+    type: categorical
+    description: Home ownership status
+    values: [RENT, OWN, MORTGAGE, OTHER]
+    
+  # Credit history features
+  credit_score:
+    type: numeric
+    description: Credit score (300-850)
+    transform: standard
+    
+  debt_to_income:
+    type: numeric
+    description: Debt-to-income ratio
+    transform: none
+    
+  num_open_accounts:
+    type: numeric
+    description: Number of open credit accounts
+    transform: none
+    
+  num_delinquencies:
+    type: numeric
+    description: Number of delinquent accounts
+    transform: none
+    
+  total_credit_limit:
+    type: numeric
+    description: Total credit limit across accounts
+    transform: log
+
+# Feature groups
+feature_groups:
+  loan_features:
+    - loan_amount
+    - loan_term
+    - interest_rate
+    - installment
+    
+  applicant_features:
+    - annual_income
+    - employment_length
+    - home_ownership
+    
+  credit_features:
+    - credit_score
+    - debt_to_income
+    - num_open_accounts
+    - num_delinquencies
+    - total_credit_limit
+
+# Derived features to create
+derived_features:
+  loan_to_income:
+    formula: loan_amount / annual_income
+    description: Loan-to-income ratio
+    
+  credit_utilization:
+    formula: total_debt / total_credit_limit
+    description: Credit utilization ratio
+    
+  payment_to_income:
+    formula: installment / (annual_income / 12)
+    description: Payment-to-income ratio
