@@ -6,7 +6,7 @@ including schema validation and data quality checks.
 """
 
 import pandas as pd
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 
 def validate_schema(
@@ -67,7 +67,7 @@ def validate_schema(
 def check_data_quality(
     df: pd.DataFrame,
     checks: Optional[Dict] = None
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Perform data quality checks on a DataFrame.
     
@@ -116,7 +116,7 @@ def check_data_quality(
 def check_target_distribution(
     df: pd.DataFrame,
     target_column: str
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Check the distribution of target variable.
     
