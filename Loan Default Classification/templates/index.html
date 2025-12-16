@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Credit Default Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>💳 Credit Card Default Predictor</h1>
+        <form method="POST" action="/predict">
+            {% for field in ['GENDER', 'Car_Owner', 'Propert_Owner', 'CHILDREN', 'Annual_income',
+                            'Type_Income', 'EDUCATION', 'Marital_status', 'Housing_type',
+                            'Birthday_count', 'Employed_days', 'Mobile_phone', 'Work_Phone',
+                            'Phone', 'EMAIL_ID', 'Type_Occupation', 'Family_Members'] %}
+                <label for="{{ field }}">{{ field.replace('_', ' ') }}</label>
+                <input type="text" name="{{ field }}" required>
+            {% endfor %}
+            <button type="submit">Predict</button>
+        </form>
+        {% if prediction_text %}
+            <div class="result">
+                <h2>{{ prediction_text }}</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

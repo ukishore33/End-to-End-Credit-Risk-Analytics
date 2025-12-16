@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  loan-predictor:
+    build: .
+    container_name: loan-eligibility-predictor
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./notebooks:/app/notebooks
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+    command: python src/models/train_model.py --help
+    
+  jupyter:
+    build: .
+    container_name: loan-eligibility-jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONPATH=/app
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    
+  api:
+    build: .
+    container_name: loan-eligibility-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONPATH=/app
+    command: uvicorn src.api.app:app --host 0.0.0.0 --port 8000 --reload
